@@ -4,6 +4,7 @@ import com.kobe.netty.serial.MarshallingCodeCFactory;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 
 public class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
 
@@ -13,7 +14,7 @@ public class ClientChannelInitializer extends ChannelInitializer<SocketChannel> 
 		ch.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingDecoder());
 		
 		ch.pipeline().addLast(new EchoClientHandler());
-		//ch.pipeline().addLast(new TimeClientHandler());
+		//ch.pipeline().addLast(new ReadTimeoutHandler(5)); 
 		
 	}
 

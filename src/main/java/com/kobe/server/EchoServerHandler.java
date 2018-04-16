@@ -26,6 +26,11 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
 	}
 
 	@Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel in server side is closed");
+    }
+	
+	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		cause.getStackTrace();
 		ctx.close();

@@ -4,6 +4,7 @@ import com.kobe.netty.serial.MarshallingCodeCFactory;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
 
@@ -13,7 +14,9 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
 		ch.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingDecoder());
 		
 		ch.pipeline().addLast(new EchoServerHandler());
-		//ch.pipeline().addLast(new TimeServerHandler());
+		
+		//if go idle beyond 5 seconds, the connection will be closed, to save cost 
+		ch.pipeline().addLast(new ReadTimeoutHandler(5)); 
 		
 	}
 
