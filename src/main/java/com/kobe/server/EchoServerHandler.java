@@ -1,5 +1,6 @@
 package com.kobe.server;
 
+import com.kobe.netty.dto.AddressBookProtos.AddressBook;
 import com.kobe.netty.dto.Request;
 import com.kobe.netty.dto.Response;
 
@@ -16,12 +17,14 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
 		if(msg instanceof String){
             System.out.println(msg.toString());
         }else{
-            Request request = (Request)msg;
-            System.out.println("from client: "+ request.getRequestBody());
-            
+           /* Request request = (Request)msg;
+            System.out.println("from client: "+ request.getRequestBody());            
             Response response = new Response();
             response.setResponseBody("Hello CLient, server side already received your msg.");
-            ctx.writeAndFlush(response);
+            ctx.writeAndFlush(response);*/
+        	
+            AddressBook addr = (AddressBook)msg;
+            System.out.println(addr.getPerson(0).getName());
         }
 	}
 

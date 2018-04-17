@@ -1,7 +1,11 @@
 package com.kobe.client;
 
+import com.kobe.netty.dto.AddressBookProtos;
 import com.kobe.netty.dto.Request;
 import com.kobe.netty.dto.Response;
+import com.kobe.netty.dto.AddressBookProtos.Person;
+import com.kobe.netty.dto.AddressBookProtos.Person.PhoneNumber;
+import com.kobe.netty.dto.AddressBookProtos.Person.PhoneType;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -23,11 +27,16 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter{
 
 	@Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		Request m = new Request();
+		/*Request m = new Request();
 		m.setId("001");
 		m.setName("kobe");
         m.setRequestBody("message sent from client");
-        ctx.writeAndFlush(m);
+        ctx.writeAndFlush(m);*/
+        
+        PhoneNumber phone = PhoneNumber.newBuilder().setNumber("12345678").setType(PhoneType.MOBILE).build();
+		Person kobe = Person.newBuilder().setEmail("xxx@gmail.com").setId(1).setName("kobe").addPhones(0, phone).build();		
+		AddressBookProtos.AddressBook addr = AddressBookProtos.AddressBook.newBuilder().addPerson(kobe).build();
+		ctx.writeAndFlush(addr);
     }
 
     @Override
